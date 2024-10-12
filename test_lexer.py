@@ -1,5 +1,4 @@
-import lexer
-
+from json_parser import lexer
 
 def test_checking_punctuation_tokens():
     source = "{}[]:"

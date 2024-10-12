@@ -12,6 +12,13 @@ class TokenType(Enum):
     BOOL = 7
     TEXT = 8
     SKIP = 9
+    COMMA = 10
+
+
+class LexerException(Exception):
+
+    def __init__(self, message:str) -> None:
+        super().__init__(message)
 
 
 class Token:
@@ -63,7 +70,7 @@ def tokenize(source: str) -> list[Token]:
             addToken(result)
             continue
 
-        raise Exception("Unexpected Character {}".format(source[0]))
+        raise LexerException("Unexpected Character {}".format(source[0]))
 
     return tokens
 
@@ -85,7 +92,7 @@ def check_source_for_str(source: str):
         else:
             result += c
 
-    raise Exception("Not closing quotes")
+    raise LexerException("Not closing quotes")
 
 
 def check_source_for_number(source: str):
@@ -114,7 +121,7 @@ def check_source_for_number(source: str):
         return result, source
 
     except Exception as e:
-        raise Exception("Incorrect number format") from e
+        raise LexerException("Incorrect number format") from e
 
 
 def check_source_for_bool(source: str):
